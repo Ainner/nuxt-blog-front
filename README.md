@@ -1,4 +1,4 @@
-# blog-demo
+# Nuxt-Blog-Front
 
 ## Build Setup
 
