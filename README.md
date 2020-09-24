@@ -1,5 +1,10 @@
 # Nuxt-Blog-Front
 
+1. ant-design-vue
+2. Vue
+3. Nuxt
+4. ......
+
 ## Build Setup
 
 ```bash
