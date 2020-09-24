@@ -1,6 +1,6 @@
 <template>
   <div class="top-header-xu">
-    <h2>虚泥</h2>
+    <nuxt-link to="/"><h2 style="color:#fff">徐若木</h2></nuxt-link>
     <TheNavigation />
   </div>
 </template>
