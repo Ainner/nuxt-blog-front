@@ -12,6 +12,15 @@ export default {
     ]
   },
 
+  pwa: {
+    manifest: {
+      name: 'Test',
+      lang: 'en',
+      useWebmanifestExtension: false
+    },
+    icon: '/icon.png' // disables the icon module
+  },
+
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     'ant-design-vue/dist/antd.css',
@@ -28,10 +37,12 @@ export default {
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
+    '@nuxtjs/pwa',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
+    '@nuxtjs/pwa',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
