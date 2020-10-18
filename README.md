@@ -22,4 +22,6 @@ $ yarn start
 $ yarn generate
 ```
 
+## 增加 PWA 可安装功能
+
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
