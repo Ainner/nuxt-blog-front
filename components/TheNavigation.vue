@@ -1,7 +1,8 @@
 <template>
   <div>
     <a-menu v-model="current" mode="horizontal">
-      <a-menu-item key="mail"><nuxt-link to="/404">404</nuxt-link></a-menu-item>
+      <a-menu-item key="404"><nuxt-link to="/404">404</nuxt-link></a-menu-item>
+      <a-menu-item key="todo"><nuxt-link to="/todo">todo</nuxt-link></a-menu-item>
       <a-dropdown :trigger="['click']">
         <a class="ant-dropdown-link" @click="e => e.preventDefault()">
           下拉菜单 <a-icon type="down" />

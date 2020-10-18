@@ -1,7 +1,22 @@
 <template>
   <div>
-    <div v-for="(item, index) in news" :key="index">
-      <a-card :loading="loading" :title="item.title">{{ item.message }}</a-card>
+    <a-input placeholder="Basic usage" />
+
+    <a-list bordered :data-source="news">
+      <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
+        <a-checkbox @change="onChange">
+          {{ item }} 
+        </a-checkbox>
+        <a-icon type="edit" /> <a-icon type="delete" />
+      </a-list-item>
+      <div slot="header">
+        Header
+      </div>
+      <div slot="footer">
+        Footer
+      </div>
+    </a-list>
+    <div >
     </div>
   </div>
 </template>
@@ -11,26 +26,11 @@ export default {
     return {
       loading: false,
       news: [
-        {
-          title: "Today is monday.",
-          message:
-            "Labore amet elit aliquip ut voluptate ullamco laborum veniam duis id anim.",
-        },
-        {
-          title: "Today is monday.",
-          message:
-            "Labore amet elit aliquip ut voluptate ullamco laborum veniam duis id anim.",
-        },
-        {
-          title: "Today is monday.",
-          message:
-            "Labore amet elit aliquip ut voluptate ullamco laborum veniam duis id anim.",
-        },
-        {
-          title: "Today is monday.",
-          message:
-            "Labore amet elit aliquip ut voluptate ullamco laborum veniam duis id anim.",
-        },
+        'Today is monday',
+        'Today is monday',
+        'Today is monday',
+        'Today is monday',
+        'Today is monday'
       ],
       routes: [
         {
