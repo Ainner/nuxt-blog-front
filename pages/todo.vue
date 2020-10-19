@@ -61,9 +61,12 @@ export default {
       this.$nuxt.$loading.start();
       setTimeout(() => this.$nuxt.$loading.finish(), 2000);
     });
-    if (localStorage.getItem("textTodoList") != 'null') {
-      this.news= JSON.parse(localStorage.getItem("textTodoList"));      
+
+    if(localStorage.getItem("textTodoList") == '[]' || localStorage.getItem("textTodoList") == null) {
+      return;
     }
+    this.news= JSON.parse(localStorage.getItem("textTodoList"));
+
     // Notification.requestPermission().then(permission => {
     //   // 通过 permission 判断用户的选择结果
     //   console.log('permission', permission);
@@ -82,22 +85,22 @@ export default {
   //       });
   // }
 
-  if ('serviceWorker' in navigator && 'PushManager' in window) {
-  console.log('Service Worker and Push is supported');
+//   if ('serviceWorker' in navigator && 'PushManager' in window) {
+//   console.log('Service Worker and Push is supported');
 
-  navigator.serviceWorker.register('/sw.js')
-  .then(function(swReg) {
-    console.log('Service Worker is registered', swReg);
+//   navigator.serviceWorker.register('/sw.js')
+//   .then(function(swReg) {
+//     console.log('Service Worker is registered', swReg);
 
-    var swRegistration = swReg;
-  })
-  .catch(function(error) {
-    console.error('Service Worker Error', error);
-  });
-} else {
-  console.warn('Push messaging is not supported');
-  pushButton.textContent = 'Push Not Supported';
-}
+//     var swRegistration = swReg;
+//   })
+//   .catch(function(error) {
+//     console.error('Service Worker Error', error);
+//   });
+// } else {
+//   console.warn('Push messaging is not supported');
+//   pushButton.textContent = 'Push Not Supported';
+// }
 
   },
   methods: {
