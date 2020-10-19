@@ -1,13 +1,20 @@
 <template>
   <div>
-    <a-input placeholder="Basic usage" />
+    <a-input v-model="textTodo" placeholder="Basic usage" @keydown.enter="enterToAddTodoList" />
 
-    <a-list bordered :data-source="news">
+    <a-list style="background-color: #fff;margin-top:10px" bordered :data-source="news">
       <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
         <a-checkbox @change="onChange">
-          {{ item }} 
+          <a-input
+            :value="item"
+            placeholder="Input a new Text"
+            :max-length="25"
+            style="width: 120px"
+            @blur="changeItemText($event, index)"
+          />
         </a-checkbox>
-        <a-icon type="edit" /> <a-icon type="delete" />
+        <a-time-picker :default-value="moment('12:08', 'HH:mm')" format="HH:mm" />
+        <a-icon style="margin-left:10px;" @click="deleteTodoItem(index)" type="delete" />
       </a-list-item>
       <div slot="header">
         Header
@@ -21,31 +28,21 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
+
 export default {
   data() {
     return {
+      textTodo: '',
       loading: false,
-      news: [
-        'Today is monday',
-        'Today is monday',
-        'Today is monday',
-        'Today is monday',
-        'Today is monday'
-      ],
-      routes: [
-        {
-          path: "index",
-          breadcrumbName: "First-level Menu",
-        },
-        {
-          path: "first",
-          breadcrumbName: "Second-level Menu",
-        },
-        {
-          path: "second",
-          breadcrumbName: "Third-level Menu",
-        },
-      ],
+      news: [],
+      options: {
+        dir: "auto", // 文字方向
+        body: "通知：OBKoro1评论了你的朋友圈", // 通知主体
+        requireInteraction: true, // 不自动关闭通知
+        // 通知图标 
+        icon: "https://upload-images.jianshu.io/upload_images/5245297-818e624b75271127.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+      }
     };
   },
   head: {
@@ -64,11 +61,92 @@ export default {
       this.$nuxt.$loading.start();
       setTimeout(() => this.$nuxt.$loading.finish(), 2000);
     });
+    if (localStorage.getItem("textTodoList") != 'null') {
+      this.news= JSON.parse(localStorage.getItem("textTodoList"));      
+    }
+    // Notification.requestPermission().then(permission => {
+    //   // 通过 permission 判断用户的选择结果
+    //   console.log('permission', permission);
+    // })
+    // this.notifyMe('这是通知的标题', this.options);
+
+
+  //   if ('serviceWorker' in navigator) {
+  //   navigator.serviceWorker.register('/sw.js')
+  //       .then(function(registration) {
+  //         // Successful registration
+  //         console.log('Hooray. Registration successful, scope is:', registration.scope);
+  //       }).catch(function(err) {
+  //         // Failed registration, service worker won’t be installed
+  //         console.log('Whoops. Service worker registration failed, error:', err);
+  //       });
+  // }
+
+  if ('serviceWorker' in navigator && 'PushManager' in window) {
+  console.log('Service Worker and Push is supported');
+
+  navigator.serviceWorker.register('/sw.js')
+  .then(function(swReg) {
+    console.log('Service Worker is registered', swReg);
+
+    var swRegistration = swReg;
+  })
+  .catch(function(error) {
+    console.error('Service Worker Error', error);
+  });
+} else {
+  console.warn('Push messaging is not supported');
+  pushButton.textContent = 'Push Not Supported';
+}
+
   },
   methods: {
+    moment,
     onChange(a, b, c) {
       console.log(a, b, c);
     },
+    enterToAddTodoList (ev) {
+        if (ev.keyCode === 13) {
+          this.news.push(this.textTodo);
+          localStorage.setItem("textTodoList", JSON.stringify(this.news));
+          this.textTodo = '';
+        }
+    },
+    deleteTodoItem(index) {
+      this.news.splice(index, 1)
+      localStorage.setItem("textTodoList", JSON.stringify(this.news));
+    },
+    changeItemText(e, index) {
+      this.news[index] = e.target.value
+      localStorage.setItem("textTodoList", JSON.stringify(this.news));
+    },
+    notifyMe(title, options) {
+      // 先检查浏览器是否支持
+      if (!window.Notification) {
+        console.log('浏览器不支持通知');
+      } else {
+        // 检查用户曾经是否同意接受通知
+        if (Notification.permission === 'granted') {
+          var notification = new Notification(title, options); // 显示通知
+        } else if (Notification.permission === 'default') {
+          // 用户还未选择，可以询问用户是否同意发送通知
+          Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+              console.log('用户同意授权');
+              var notification = new Notification(title, options); // 显示通知
+            } else if (permission === 'default') {
+              console.warn('用户关闭授权 未刷新页面之前 可以再次请求授权');
+            } else {
+              // denied
+              console.log('用户拒绝授权 不能显示通知');
+            }
+          });
+        } else {
+          // denied 用户拒绝
+          console.log('用户曾经拒绝显示通知');
+        }
+      }
+    }
   },
 };
 </script>
