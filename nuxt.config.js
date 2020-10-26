@@ -14,11 +14,11 @@ export default {
 
   pwa: {
     manifest: {
-      name: 'Test',
-      lang: 'en',
+      name: '青雲學府',
+      lang: 'zh-cn',
       useWebmanifestExtension: false
     },
-    icon: '/icon.png' // disables the icon module
+    icon: '/logo.png' // disables the icon module
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)

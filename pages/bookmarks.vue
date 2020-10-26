@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a-input v-model="textTodo" placeholder="输入内容回车" @keydown.enter="enterToAddTodoList" />
+    <a-input style="margin-bottom:10px;" v-model="bookmarkInfo.title" placeholder="输入书签名称" @keydown.enter="enterToAddBookmark" />
+    <a-input v-model="bookmarkInfo.link" placeholder="复制链接回车" @keydown.enter="enterToAddBookmark" />
 
     <a-list style="background-color: #fff;margin-top:10px" bordered :data-source="news">
       <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
@@ -10,11 +11,11 @@
             placeholder="Input a new Text"
             :max-length="25"
             style="width: 120px"
-            @blur="changeItemText($event, index)"
+            @blur="changeBookmarkInfo($event, index)"
           />
         </a-checkbox>
         <a-time-picker :default-value="moment('12:08', 'HH:mm')" format="HH:mm" />
-        <a-icon style="margin-left:10px;" @click="deleteTodoItem(index)" type="delete" />
+        <a-icon style="margin-left:10px;" @click="deleteBookmarkItem(index)" type="delete" />
       </a-list-item>
       <div slot="footer">
         反馈
@@ -30,7 +31,10 @@ import moment from 'moment';
 export default {
   data() {
     return {
-      textTodo: '',
+      bookmarkInfo: {
+        title: '',
+        link: '',
+      },
       loading: false,
       news: [],
       options: {
@@ -105,18 +109,18 @@ export default {
     onChange(a, b, c) {
       console.log(a, b, c);
     },
-    enterToAddTodoList (ev) {
+    enterToAddBookmark (ev) {
         if (ev.keyCode === 13) {
           this.news.push(this.textTodo);
           localStorage.setItem("textTodoList", JSON.stringify(this.news));
           this.textTodo = '';
         }
     },
-    deleteTodoItem(index) {
+    deleteBookmarkItem(index) {
       this.news.splice(index, 1)
       localStorage.setItem("textTodoList", JSON.stringify(this.news));
     },
-    changeItemText(e, index) {
+    changeBookmarkInfo(e, index) {
       this.news[index] = e.target.value
       localStorage.setItem("textTodoList", JSON.stringify(this.news));
     },

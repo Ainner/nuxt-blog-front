@@ -61,4 +61,12 @@ html {
   color: #fff;
   background-color: #35495e;
 }
+
+.ant-layout-header {
+  background: transparent;
+}
+
+.ant-layout-content {
+  padding: 50px 0;
+}
 </style>

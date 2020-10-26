@@ -1,34 +1,31 @@
 <template>
   <div>
-    <a-menu v-model="current" mode="horizontal">
-      <a-menu-item key="404"><nuxt-link to="/404">404</nuxt-link></a-menu-item>
-      <a-menu-item key="todo"><nuxt-link to="/todo">todo</nuxt-link></a-menu-item>
-      <a-dropdown :trigger="['click']">
-        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-          下拉菜单 <a-icon type="down" />
-        </a>
-        <a-menu slot="overlay">
-          <a-menu-item key="0">
-            <nuxt-link to="/">首页</nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="1">
-            <nuxt-link to="/404">404</nuxt-link>
-          </a-menu-item>
-          <a-menu-divider />
-          <a-menu-item key="3">
-            3rd menu item
-          </a-menu-item>
-        </a-menu>
-      </a-dropdown>
-    </a-menu>
+    <ul id="custom_menu">
+      <li><nuxt-link to="/">首页</nuxt-link></li>
+      <li><nuxt-link to="/todo">待办</nuxt-link></li>
+      <li><nuxt-link to="/bookmarks">书签</nuxt-link></li>
+      <li><nuxt-link to="/404">错误</nuxt-link></li>
+    </ul>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      current: ['mail'],
     };
   },
 };
 </script>
+
+<style scoped>
+#custom_menu {
+  list-style: none;
+  margin: 0;
+  color: #333;
+}
+#custom_menu li {
+  float: left;
+  margin-left: 40px;
+}
+
+</style>

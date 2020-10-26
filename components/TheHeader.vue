@@ -1,6 +1,6 @@
 <template>
   <div class="top-header-xu">
-    <nuxt-link to="/"><h2 style="color:#fff">徐若木</h2></nuxt-link>
+    <nuxt-link to="/"><img height="40" src="/logo.png" alt="青雲學府"></nuxt-link>
     <TheNavigation />
   </div>
 </template>
