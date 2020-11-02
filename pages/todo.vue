@@ -28,6 +28,7 @@
 import moment from 'moment';
 
 export default {
+  layout: 'index',
   data() {
     return {
       textTodo: '',

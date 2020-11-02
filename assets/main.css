@@ -9,7 +9,7 @@
     margin: 0;
     overflow-x: hidden;
     overflow-y: scroll;
-    background-size: cover;
+    background: #f4f9ff;
   }
   
   a,

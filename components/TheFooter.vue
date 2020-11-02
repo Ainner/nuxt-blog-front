@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>“三更灯火五更鸡，正是男儿读书时。黑发不知勤学早，白首方悔读书迟。”</div>
 </template>
 
 <style scoped>

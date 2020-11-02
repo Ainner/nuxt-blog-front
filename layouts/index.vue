@@ -1,9 +1,9 @@
 <template>
-    <a-layout>
-      <a-layout-header><TheHeader /></a-layout-header>
-      <a-layout-content><Nuxt /></a-layout-content>
-      <a-layout-footer><TheFooter /></a-layout-footer>
-    </a-layout>
+  <section>
+    <TheHeader id="header" />
+    <Nuxt id="main" />
+    <TheFooter id="footer" />
+  </section>
 </template>
 
 <style>
@@ -62,11 +62,32 @@ html {
   background-color: #35495e;
 }
 
-.ant-layout-header {
-  background: transparent;
+#header {
+  position: fixed;
+  z-index: 99999;
+  width: 50%;
+  top: 0;
+  left: 0;
+  padding: 10px 20px;
+}
+.ant-layout-content {
+  max-width: 100%;
 }
 
-.ant-layout-content {
-  padding: 50px 0;
+#main {
+  display: flex;
+  height: 100vh;
+}
+
+#footer {
+  position: fixed;
+  z-index: -1;
+  height: 50px;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 50%;
 }
 </style>
