@@ -1,10 +1,50 @@
 <template>
-  <section>
+  <section style="display:flex">
     <TheHeader id="header" />
-    <Nuxt id="main" />
+    <div id="content_left">
+      <Nuxt id="main" />
+    </div>
+    <div id="content_right">
+      <div>
+        <div id="news">
+          <div v-for="(item, index) in news" :key="index">
+            <a-card style="margin-bottom:20px;" :loading="loading" :title="item.title.rendered"><div class="content" v-html="item.content.rendered"></div></a-card>
+          </div>
+        </div>
+      </div>
+    </div>
     <TheFooter id="footer" />
   </section>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      loading: false,
+      news: [],
+    }
+  },
+  methods: {
+    getNewsList() {
+      fetch('http://test.chimeiwangliang.cn/wp-json/wp/v2/posts', {
+        method: 'GET',
+      })
+      .then(response => {
+        if(response.ok) {
+          response.json().then(data => {
+            this.news = data  // data.data.list
+          })
+        }
+      })
+      .catch(error => console.log(error))
+    }
+  },
+  mounted() {
+    this.getNewsList()
+  }
+}
+</script>
 
 <style>
 html {
@@ -24,6 +64,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  height: 100%;
 }
 
 *,
@@ -68,26 +113,52 @@ html {
   width: 50%;
   top: 0;
   left: 0;
-  padding: 10px 20px;
-}
-.ant-layout-content {
-  max-width: 100%;
-}
-
-#main {
-  display: flex;
-  height: 100vh;
+  padding: 10px 40px 10px 20px;
 }
 
 #footer {
   position: fixed;
   z-index: -1;
   height: 50px;
-  bottom: 0;
+  bottom: 10px;
   left: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   width: 50%;
+}
+#content_right {
+  width: 50%;
+  background: #333;
+  padding: 10vh 10vw;
+  height: 100vh;
+}
+#content_left {
+  width: 50%;
+  padding: 10vh 10vh;
+  padding-bottom: 50px;
+  height: 100vh;
+}
+#content_left > div {
+  margin-bottom: 20px;
+}
+
+#content_right > div {
+  overflow: hidden;
+  height: 100%;
+}
+
+#news {
+  position: relative;
+  left: 0px;
+  width: calc(100% + 20px);
+  height: 100%;
+  overflow-y: scroll;
+}
+
+#news >>> .ant-card, #news >>> .ant-card-head {
+  background: unset;
+  color: #fff;
+  border: unset;
 }
 </style>

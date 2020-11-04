@@ -48,13 +48,13 @@ export default {
     };
   },
   head: {
-    title: "Home page",
+    title: "书签 - 存世留千古，晚恨从容破",
     meta: [
       {
         hid: "description",
         name: "description",
         content:
-          "The amazing Nuxt.js application that teaches me all the cool features of Nuxt.js with a Hello World",
+          "存世留千古，晚恨从容破",
       },
     ],
   },

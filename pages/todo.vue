@@ -44,13 +44,13 @@ export default {
     };
   },
   head: {
-    title: "Home page",
+    title: "待办 - 行事含条理，千军万马从中过",
     meta: [
       {
         hid: "description",
         name: "description",
         content:
-          "The amazing Nuxt.js application that teaches me all the cool features of Nuxt.js with a Hello World",
+          "行事含条理，千军万马从中过",
       },
     ],
   },

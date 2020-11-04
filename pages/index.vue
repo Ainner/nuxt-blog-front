@@ -1,7 +1,6 @@
 <template>
   <div>
 
-    <div id="content_left">
       <div id="todo_list">
         <nuxt-link to="/todo">
           <a-card :loading="loading" title="待办">
@@ -20,17 +19,6 @@
           </a-card>
         </nuxt-link>
       </div>
-    </div>
-
-    <div id="content_right">
-      <div>
-        <div id="news">
-          <div v-for="(item, index) in news" :key="index">
-            <a-card style="margin-bottom:20px;" :loading="loading" :title="item.title.rendered"><div class="content" v-html="item.content.rendered"></div></a-card>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </template>
@@ -41,7 +29,6 @@ export default {
     return {
       loading: false,
       todoList: [],
-      news: [],
     };
   },
   head: {
@@ -56,7 +43,6 @@ export default {
     ],
   },
   mounted() {
-    this.getNewsList()
     this.$nextTick(() => {
       this.$nuxt.$loading.start();
       setTimeout(() => this.$nuxt.$loading.finish(), 2000);
@@ -69,19 +55,6 @@ export default {
   methods: {
     onChange(a, b, c) {
       console.log(a, b, c);
-    },
-    getNewsList() {
-      fetch('http://test.chimeiwangliang.cn/wp-json/wp/v2/posts', {
-        method: 'GET',
-      })
-      .then(response => {
-        if(response.ok) {
-          response.json().then(data => {
-            this.news = data  // data.data.list
-          })
-        }
-      })
-      .catch(error => console.log(error))
     }
   },
 };
@@ -91,37 +64,8 @@ export default {
 .ant-page-header.has-breadcrumb {
   background-color: #ffffffe0;
 }
-#content_right {
-  width: 50%;
-  background: #333;
-  padding: 10vh 10vw;
-}
-#content_left {
-  width: 50%;
-  padding: 10vh 10vw;
-  padding-bottom: 50px;
-}
-#content_left > div {
+
+#todo_list {
   margin-bottom: 20px;
-}
-
-#content_right > div {
-  overflow: hidden;
-  height: 100%;
-}
-
-#news {
-  position: relative;
-  left: 0px;
-  padding: 4%;
-  width: calc(100% + 20px);
-  height: 100%;
-  overflow-y: scroll;
-}
-
-#news >>> .ant-card, #news >>> .ant-card-head {
-  background: unset;
-  color: #fff;
-  border: unset;
 }
 </style>
