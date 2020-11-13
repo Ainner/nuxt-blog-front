@@ -1,10 +1,12 @@
 <template>
-  <section style="display:flex">
+  <section id="content" style="display:flex">
     <TheHeader id="header" />
     <div id="content_left">
-      <Nuxt id="main" />
+      <div>
+        <Nuxt id="main" />
+      </div>
     </div>
-    <div id="content_right">
+    <div v-if="isNotMobile" id="content_right">
       <div>
         <div id="news">
           <div v-for="(item, index) in news" :key="index">
@@ -23,6 +25,7 @@ export default {
     return {
       loading: false,
       news: [],
+      isNotMobile: true
     }
   },
   methods: {
@@ -38,10 +41,19 @@ export default {
         }
       })
       .catch(error => console.log(error))
+    },
+    _isMobile(){
+      let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+      return flag;
     }
   },
   mounted() {
-    this.getNewsList()
+    this.getNewsList();
+    if (this._isMobile()) {
+      this.isNotMobile = false
+    }else {
+      this.isNotMobile = true
+    }
   }
 }
 </script>
@@ -76,7 +88,13 @@ body {
 *::after {
   box-sizing: border-box;
   margin: 0;
+  -ms-overflow-style: none;
 }
+* {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+}
+*::-webkit-scrollbar { width: 0 !important }
 
 .button--green {
   display: inline-block;
@@ -109,7 +127,7 @@ body {
 
 #header {
   position: fixed;
-  z-index: 99999;
+  z-index: 9;
   width: 50%;
   top: 0;
   left: 0;
@@ -126,39 +144,55 @@ body {
   align-items: flex-end;
   justify-content: center;
   width: 50%;
-}
-#content_right {
-  width: 50%;
-  background: #333;
-  padding: 10vh 10vw;
-  height: 100vh;
-}
-#content_left {
-  width: 50%;
-  padding: 10vh 10vh;
-  padding-bottom: 50px;
-  height: 100vh;
-}
-#content_left > div {
-  margin-bottom: 20px;
+  text-align: center;
+  padding: 0 5vw;
 }
 
-#content_right > div {
+/* 左右大框架 */
+#content_left, #content_right {
+  width: 50%;
+  height: 100vh;
+  padding: 8vh 5vw;
+}
+/* 内容外包，隐藏滚动栏作用 */
+#content_left > div, #content_right > div {
   overflow: hidden;
   height: 100%;
 }
-
-#news {
-  position: relative;
-  left: 0px;
-  width: calc(100% + 20px);
+/* 内容 */
+#content_left > div > #main, #news {
+  width: 100%;
   height: 100%;
   overflow-y: scroll;
+  padding: 20px;
 }
 
-#news >>> .ant-card, #news >>> .ant-card-head {
-  background: unset;
-  color: #fff;
-  border: unset;
+#content_right {
+  background: #333;
+}
+
+#content_right img {
+  max-width: 100%;
+  height: auto;
+}
+
+#news .ant-card-head-title {
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 1000px) {
+  #content {
+    flex-direction: column;
+  }
+
+  #header, #content_left, #content_right, #footer {
+    width: 100%;
+  }
+  #content_left, #content_right {
+    height: 100vh;
+  }
+  #header ul#custom_menu li {
+    margin-left: 20px;
+  }
 }
 </style>

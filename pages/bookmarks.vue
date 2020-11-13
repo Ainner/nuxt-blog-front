@@ -3,18 +3,23 @@
     <a-input style="margin-bottom:10px;" v-model="bookmarkInfo.title" placeholder="输入书签名称" @keydown.enter="enterToAddBookmark" />
     <a-input v-model="bookmarkInfo.link" placeholder="复制链接回车" @keydown.enter="enterToAddBookmark" />
 
-    <a-list style="background-color: #fff;margin-top:10px" bordered :data-source="news">
+    <a-list style="background-color: #fff;margin-top:10px" bordered :data-source="links">
       <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
         <a-checkbox @change="onChange">
           <a-input
-            :value="item"
-            placeholder="Input a new Text"
+            :value="item.title"
+            placeholder="输入修改的标题"
             :max-length="25"
             style="width: 120px"
             @blur="changeBookmarkInfo($event, index)"
           />
         </a-checkbox>
-        <a-time-picker :default-value="moment('12:08', 'HH:mm')" format="HH:mm" />
+        <a 
+          style="color: var(--primary-color)"
+          :href="item.link"
+          target="_blank"
+        >去查看</a>
+        <!-- <a-time-picker :default-value="moment('12:08', 'HH:mm')" format="HH:mm" /> -->
         <a-icon style="margin-left:10px;" @click="deleteBookmarkItem(index)" type="delete" />
       </a-list-item>
       <div slot="footer">
@@ -26,7 +31,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+// import moment from 'moment';
 
 export default {
   layout: 'index',
@@ -37,7 +42,7 @@ export default {
         link: '',
       },
       loading: false,
-      news: [],
+      links: [],
       options: {
         dir: "auto", // 文字方向
         body: "通知：OBKoro1评论了你的朋友圈", // 通知主体
@@ -64,66 +69,36 @@ export default {
       setTimeout(() => this.$nuxt.$loading.finish(), 2000);
     });
 
-    if(localStorage.getItem("textTodoList") == '[]' || localStorage.getItem("textTodoList") == null) {
+    if(localStorage.getItem("textBookmark") == '[]' || localStorage.getItem("textBookmark") == null) {
       return;
     }
-    this.news= JSON.parse(localStorage.getItem("textTodoList"));
-
-    // Notification.requestPermission().then(permission => {
-    //   // 通过 permission 判断用户的选择结果
-    //   console.log('permission', permission);
-    // })
-    // this.notifyMe('这是通知的标题', this.options);
-
-
-  //   if ('serviceWorker' in navigator) {
-  //   navigator.serviceWorker.register('/sw.js')
-  //       .then(function(registration) {
-  //         // Successful registration
-  //         console.log('Hooray. Registration successful, scope is:', registration.scope);
-  //       }).catch(function(err) {
-  //         // Failed registration, service worker won’t be installed
-  //         console.log('Whoops. Service worker registration failed, error:', err);
-  //       });
-  // }
-
-//   if ('serviceWorker' in navigator && 'PushManager' in window) {
-//   console.log('Service Worker and Push is supported');
-
-//   navigator.serviceWorker.register('/sw.js')
-//   .then(function(swReg) {
-//     console.log('Service Worker is registered', swReg);
-
-//     var swRegistration = swReg;
-//   })
-//   .catch(function(error) {
-//     console.error('Service Worker Error', error);
-//   });
-// } else {
-//   console.warn('Push messaging is not supported');
-//   pushButton.textContent = 'Push Not Supported';
-// }
-
+    this.links= JSON.parse(localStorage.getItem("textBookmark"));
   },
   methods: {
-    moment,
+    // moment,
     onChange(a, b, c) {
       console.log(a, b, c);
     },
     enterToAddBookmark (ev) {
-        if (ev.keyCode === 13) {
-          this.news.push(this.textTodo);
-          localStorage.setItem("textTodoList", JSON.stringify(this.news));
-          this.textTodo = '';
+        if (ev.keyCode === 13 && this.bookmarkInfo.title != '' && this.bookmarkInfo.link != '') {
+          this.links.push(this.bookmarkInfo);
+          localStorage.setItem("textBookmark", JSON.stringify(this.links));
+          this.bookmarkInfo.title = '';
+          this.bookmarkInfo.link = '';
+          this.$message.success('添加成功');
+        } else {
+          this.$message.warning('请输入标题及链接回车');
         }
     },
     deleteBookmarkItem(index) {
-      this.news.splice(index, 1)
-      localStorage.setItem("textTodoList", JSON.stringify(this.news));
+      this.links.splice(index, 1)
+      localStorage.setItem("textBookmark", JSON.stringify(this.links));
+      this.$message.success('删除成功');
     },
     changeBookmarkInfo(e, index) {
-      this.news[index] = e.target.value
-      localStorage.setItem("textTodoList", JSON.stringify(this.news));
+      this.links[index].title = e.target.value
+      localStorage.setItem("textBookmark", JSON.stringify(this.links));
+      this.$message.success('修改成功');
     },
     notifyMe(title, options) {
       // 先检查浏览器是否支持

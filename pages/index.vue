@@ -4,20 +4,18 @@
       <div id="todo_list">
         <nuxt-link to="/todo">
           <a-card :loading="loading" title="待办">
-            <a-card-grid style="text-align:center;overflow: hidden;" v-for="(item, index) in todoList" :key="index" :hoverable="true">
+            <a-card-grid style="text-align:center;overflow: hidden;width:50%;" v-for="(item, index) in todoList" :key="index" :hoverable="true">
               {{ item }}
             </a-card-grid>
           </a-card>
         </nuxt-link>
       </div>
       <div id="bookmarks">
-        <nuxt-link to="/bookmarks">
-          <a-card :loading="loading" title="书签">
-            <a-card-grid style="text-align:center;overflow: hidden;" v-for="(item, index) in todoList" :key="index" :hoverable="true">
-              {{ item }}
-            </a-card-grid>
-          </a-card>
-        </nuxt-link>
+        <a-card :loading="loading" title="书签">
+          <a-card-grid style="text-align:center;overflow: hidden;width:50%;" v-for="(item, index) in bookmark" :key="index" :hoverable="true">
+            <a :href="item.link" target="_blank">{{ item.title }}</a>
+          </a-card-grid>
+        </a-card>
       </div>
 
   </div>
@@ -29,6 +27,7 @@ export default {
     return {
       loading: false,
       todoList: [],
+      bookmark: []
     };
   },
   head: {
@@ -50,7 +49,11 @@ export default {
     if(localStorage.getItem("textTodoList") == '[]' || localStorage.getItem("textTodoList") == null) {
       return;
     }
+    if(localStorage.getItem("textBookmark") == '[]' || localStorage.getItem("textBookmark") == null) {
+      return;
+    }
     this.todoList= JSON.parse(localStorage.getItem("textTodoList"));
+    this.bookmark= JSON.parse(localStorage.getItem("textBookmark"));
   },
   methods: {
     onChange(a, b, c) {

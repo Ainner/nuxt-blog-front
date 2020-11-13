@@ -7,13 +7,13 @@
         <a-checkbox @change="onChange">
           <a-input
             :value="item"
-            placeholder="Input a new Text"
+            placeholder="输入修改的标题"
             :max-length="25"
             style="width: 120px"
             @blur="changeItemText($event, index)"
           />
         </a-checkbox>
-        <a-time-picker :default-value="moment('12:08', 'HH:mm')" format="HH:mm" />
+        <!-- <a-time-picker :default-value="moment('12:08', 'HH:mm')" format="HH:mm" /> -->
         <a-icon style="margin-left:10px;" @click="deleteTodoItem(index)" type="delete" />
       </a-list-item>
       <div slot="footer">
@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+// import moment from 'moment';
 
 export default {
   layout: 'index',
@@ -64,45 +64,9 @@ export default {
       return;
     }
     this.news= JSON.parse(localStorage.getItem("textTodoList"));
-
-    // Notification.requestPermission().then(permission => {
-    //   // 通过 permission 判断用户的选择结果
-    //   console.log('permission', permission);
-    // })
-    // this.notifyMe('这是通知的标题', this.options);
-
-
-  //   if ('serviceWorker' in navigator) {
-  //   navigator.serviceWorker.register('/sw.js')
-  //       .then(function(registration) {
-  //         // Successful registration
-  //         console.log('Hooray. Registration successful, scope is:', registration.scope);
-  //       }).catch(function(err) {
-  //         // Failed registration, service worker won’t be installed
-  //         console.log('Whoops. Service worker registration failed, error:', err);
-  //       });
-  // }
-
-//   if ('serviceWorker' in navigator && 'PushManager' in window) {
-//   console.log('Service Worker and Push is supported');
-
-//   navigator.serviceWorker.register('/sw.js')
-//   .then(function(swReg) {
-//     console.log('Service Worker is registered', swReg);
-
-//     var swRegistration = swReg;
-//   })
-//   .catch(function(error) {
-//     console.error('Service Worker Error', error);
-//   });
-// } else {
-//   console.warn('Push messaging is not supported');
-//   pushButton.textContent = 'Push Not Supported';
-// }
-
   },
   methods: {
-    moment,
+    // moment,
     onChange(a, b, c) {
       console.log(a, b, c);
     },
