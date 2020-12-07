@@ -25,33 +25,34 @@ export default {
     return {
       loading: false,
       news: [{
-        title: '11月13日 晴天',
-        content: '今天天气很不错，适合：'
+        title: '--- ---',
+        content: '----------------,-------.'
       }],
       isNotMobile: true
     }
   },
   methods: {
-    // getNewsList() {
-    //   fetch('http://test.chimeiwangliang.cn/wp-json/wp/v2/posts', {
-    //     method: 'GET',
-    //   })
-    //   .then(response => {
-    //     if(response.ok) {
-    //       response.json().then(data => {
-    //         this.news = data  // data.data.list
-    //       })
-    //     }
-    //   })
-    //   .catch(error => console.log(error))
-    // },
+    getNewsList() {
+      fetch('http://127.0.0.1:3001/getArticleList', {
+        method: 'GET',
+      })
+      .then(response => {
+        if(response.ok) {
+          response.json().then(data => {
+            console.log(data);
+            this.news = data.data.list  // data.data.list
+          })
+        }
+      })
+      .catch(error => console.log(error))
+    },
     _isMobile(){
       let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
       return flag;
     }
   },
   mounted() {
-    // this.getNewsList();
+    this.getNewsList();
     if (this._isMobile()) {
       this.isNotMobile = false
     }else {
