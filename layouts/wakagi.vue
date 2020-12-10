@@ -54,7 +54,7 @@ export default {
         phone: '',
         email: '',
         introduce: '',
-        type: ''
+        type: '0'
       },
     }
   },
@@ -63,11 +63,10 @@ export default {
       console.log(this.formInline);
     },
     currentUser() {
-      fetch('http://127.0.0.1:3001/currentUser', {
+      fetch('http://106.75.236.197:3000/currentUser', {
         method: 'GET',
       })
       .then(res => {
-        console.log(res);
         if(res.ok) {
           res.json().then(data => {
             console.log(data);
@@ -76,7 +75,7 @@ export default {
       })
     },
     loginUser() {
-      fetch('http://127.0.0.1:3001/loginAdmin', {
+      fetch('http://106.75.236.197:3000/loginAdmin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -93,11 +92,19 @@ export default {
             console.log(data);
             this.currentUser()
           })
+        } else if (res.status == 400) {
+          res.json().then(data => {
+            this.$notification['error']({
+              message: '登录失败',
+              description:
+                data.message,
+            });
+          })
         }
       })
     },
     registerUser() {
-      fetch('http://127.0.0.1:3001/register', {
+      fetch('http://106.75.236.197:3000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -105,7 +112,6 @@ export default {
         body: JSON.stringify(this.formInline),
       })
       .then(res => {
-        console.log(res);
         if(res.ok) {
           res.json().then(data => {
             if (data.code == 0) {
