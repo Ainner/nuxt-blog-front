@@ -63,7 +63,7 @@ export default {
       console.log(this.formInline);
     },
     currentUser() {
-      fetch('http://106.75.236.197:3000/currentUser', {
+      fetch('http://127.0.0.1:3000/currentUser', {
         method: 'GET',
       })
       .then(res => {
@@ -75,7 +75,7 @@ export default {
       })
     },
     loginUser() {
-      fetch('http://106.75.236.197:3000/loginAdmin', {
+      fetch('http://127.0.0.1:3000/loginAdmin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ export default {
       })
     },
     registerUser() {
-      fetch('http://106.75.236.197:3000/register', {
+      fetch('http://127.0.0.1:3000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
