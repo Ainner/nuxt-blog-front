@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <Nuxt id="main" />
-    <div class="signup" v-if="!code">
-
+  <a-layout id="components-layout-demo-top-side-2">
+    <div class="signup" v-if="false">
       <a-form-model layout="horizontal" :model="formInline" @submit="registerUser" @submit.native.prevent>
         <a-form-model-item>
           <a-input v-model="formInline.name" placeholder="Username">
@@ -40,7 +38,59 @@
       </a-form-model>
 
     </div>
-  </div>
+  
+    <a-layout-header class="header">
+      <div class="logo" />
+      <a-menu
+        theme="dark"
+        mode="horizontal"
+        :default-selected-keys="['2']"
+        :style="{ lineHeight: '64px' }"
+      >
+        <a-menu-item key="1">
+          文章
+        </a-menu-item>
+      </a-menu>
+    </a-layout-header>
+    <a-layout>
+      <a-layout-sider width="200" style="background: #fff">
+        <a-menu
+          mode="inline"
+          :default-selected-keys="['1']"
+          :default-open-keys="['sub1']"
+          :style="{ height: '100%', borderRight: 0 }"
+        >
+          <a-sub-menu key="sub1">
+            <span slot="title"><a-icon type="user" />文章</span>
+            <a-menu-item key="1">
+              <NuxtLink to="/wakagi/posts">列表</NuxtLink>
+            </a-menu-item>
+            <a-menu-item key="2">
+              <NuxtLink to="/wakagi/posts/add">发布</NuxtLink>
+            </a-menu-item>
+          </a-sub-menu>
+        </a-menu>
+      </a-layout-sider>
+      <a-layout style="padding: 0 24px 24px">
+        <a-breadcrumb style="margin: 16px 0">
+          <a-breadcrumb-item>
+              <NuxtLink to="/wakagi">家</NuxtLink>
+          </a-breadcrumb-item>
+          <a-breadcrumb-item>
+              <NuxtLink to="/wakagi/posts">文章</NuxtLink>
+          </a-breadcrumb-item>
+          <a-breadcrumb-item>
+              <NuxtLink to="/wakagi/posts/add">发布</NuxtLink>
+          </a-breadcrumb-item>
+        </a-breadcrumb>
+        <a-layout-content
+          :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
+        >
+          <Nuxt id="main" />
+        </a-layout-content>
+      </a-layout>
+    </a-layout>
+  </a-layout>
 </template>
 
 <script>
@@ -137,7 +187,7 @@ export default {
     }
   },
   mounted() {
-    this.loginUser()
+    // this.loginUser()
     !localStorage.getItem("code") ? localStorage.getItem("code") : ''
   },
 }

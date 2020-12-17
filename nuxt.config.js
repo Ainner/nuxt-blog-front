@@ -24,12 +24,19 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     'ant-design-vue/dist/antd.css',
-    'assets/main.css'
+    'assets/main.css',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.core.css'
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    {
+      src: '~/plugins/vue-quill-editor',
+      ssr: false
+    }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
