@@ -56,16 +56,16 @@
       <a-layout-sider width="200" style="background: #fff">
         <a-menu
           mode="inline"
-          :default-selected-keys="['1']"
-          :default-open-keys="['sub1']"
+          :default-selected-keys="[$nuxt.$route.name]"
+          :default-open-keys="[$nuxt.$route.name]"
           :style="{ height: '100%', borderRight: 0 }"
         >
-          <a-sub-menu key="sub1">
+          <a-sub-menu key="wakagi-posts">
             <span slot="title"><a-icon type="user" />文章</span>
-            <a-menu-item key="1">
+            <a-menu-item key="wakagi-posts">
               <NuxtLink to="/wakagi/posts">列表</NuxtLink>
             </a-menu-item>
-            <a-menu-item key="2">
+            <a-menu-item key="wakagi-posts-add">
               <NuxtLink to="/wakagi/posts/add">发布</NuxtLink>
             </a-menu-item>
           </a-sub-menu>

@@ -1,10 +1,9 @@
 <template>
-  <div>
-    仪表盘
-  </div>
+    <div></div>
 </template>
+
 <script>
 export default {
-  layout: 'wakagi',
+    layout: 'ruomu'
 }
 </script>

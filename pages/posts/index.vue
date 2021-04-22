@@ -6,6 +6,7 @@
 <script>
 export default {
   layout: 'post',
+  name: 'postList',
   data() {
     return {
     };

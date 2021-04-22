@@ -1,59 +1,26 @@
 <template>
   <div style="display: flex;justify-content: space-evenly;">
-  <a-card hoverable style="width: 300px">
+
+  <a-card v-for="(item, index) in article" :key="index" hoverable style="width: 300px">
     <img
       slot="cover"
       alt="example"
-      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+      :src="item.img_url"
     />
     <template slot="actions" class="ant-card-actions">
       <a-icon key="setting" type="setting" />
-      <a-icon key="edit" type="edit" />
+      <nuxt-link :to="{ name: 'wakagi-posts-add', params: { id: item._id }}"><a-icon key="edit" type="edit" /></nuxt-link>
       <a-icon key="ellipsis" type="ellipsis" />
     </template>
-    <a-card-meta title="Card title" description="This is the description">
+    <a-card-meta :title="item.title" :description="item.desc">
       <a-avatar
         slot="avatar"
-        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        src="http://w-ww.cn-sh2.ufileos.com/logo.png"
       />
     </a-card-meta>
   </a-card>
-  <a-card hoverable style="width: 300px">
-    <img
-      slot="cover"
-      alt="example"
-      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-    />
-    <template slot="actions" class="ant-card-actions">
-      <a-icon key="setting" type="setting" />
-      <a-icon key="edit" type="edit" />
-      <a-icon key="ellipsis" type="ellipsis" />
-    </template>
-    <a-card-meta title="Card title" description="This is the description">
-      <a-avatar
-        slot="avatar"
-        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-      />
-    </a-card-meta>
-  </a-card>
-  <a-card hoverable style="width: 300px">
-    <img
-      slot="cover"
-      alt="example"
-      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-    />
-    <template slot="actions" class="ant-card-actions">
-      <a-icon key="setting" type="setting" />
-      <a-icon key="edit" type="edit" />
-      <a-icon key="ellipsis" type="ellipsis" />
-    </template>
-    <a-card-meta title="Card title" description="This is the description">
-      <a-avatar
-        slot="avatar"
-        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-      />
-    </a-card-meta>
-  </a-card>
+ 
+
   </div>
 </template>
 <script>
@@ -61,6 +28,7 @@ export default {
   layout: 'wakagi',
   data() {
     return {
+      article: [],
     };
   },
   head: {
@@ -75,8 +43,22 @@ export default {
     ],
   },
   mounted() {
+    this.getArticleListAdmin()
   },
   methods: {
+    getArticleListAdmin() {
+      fetch('http://chimeiwangliang.cn/api/getArticleListAdmin', {
+        method: 'GET',
+      })
+      .then(response => {
+        if(response.ok) {
+          response.json().then(data => {
+            this.article = data.data.list
+          })
+        }
+      })
+      .catch(error => console.log(error))
+    }
   },
 };
 </script>
