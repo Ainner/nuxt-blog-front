@@ -24,23 +24,20 @@ export default {
   data() {
     return {
       loading: false,
-      news: [{
-        title: '--- ---',
-        content: '----------------,-------.'
-      }],
+      news: [],
       isNotMobile: true
     }
   },
   methods: {
     getNewsList() {
-      fetch('http://127.0.0.1:3001/getArticleList', {
+      fetch('https://blog.chimeiwangliang.cn/wp-json/wp/v2/posts?categories=18', {
         method: 'GET',
       })
       .then(response => {
         if(response.ok) {
           response.json().then(data => {
             console.log(data);
-            this.news = data.data.list  // data.data.list
+            this.news = data  // data.data.list
           })
         }
       })
