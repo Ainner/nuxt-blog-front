@@ -72,7 +72,8 @@ export default {
     if(localStorage.getItem("textBookmark") == '[]' || localStorage.getItem("textBookmark") == null) {
       return;
     }
-    this.links= JSON.parse(localStorage.getItem("textBookmark"));
+    let result = JSON.parse(localStorage.getItem("textBookmark"));
+    this.links = result;
   },
   methods: {
     // moment,
@@ -80,9 +81,16 @@ export default {
       console.log(a, b, c);
     },
     enterToAddBookmark (ev) {
+      let links = this.links;
         if (ev.keyCode === 13 && this.bookmarkInfo.title != '' && this.bookmarkInfo.link != '') {
-          this.links.push(this.bookmarkInfo);
-          localStorage.setItem("textBookmark", JSON.stringify(this.links));
+          let newDate = {
+              "title": this.bookmarkInfo.title,
+              "link": this.bookmarkInfo.link,
+          };
+          links.push(newDate);
+          this.links = links;
+          // 是赋值问题
+          localStorage.setItem("textBookmark", JSON.stringify(links));
           this.bookmarkInfo.title = '';
           this.bookmarkInfo.link = '';
           this.$message.success('添加成功');
