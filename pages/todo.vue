@@ -17,7 +17,7 @@
         <a-icon style="margin-left:10px;" @click="deleteTodoItem(index)" type="delete" />
       </a-list-item>
       <div slot="footer">
-        反馈
+        所有数据仅保存在本地
       </div>
     </a-list>
     <div >

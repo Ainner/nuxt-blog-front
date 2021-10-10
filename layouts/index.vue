@@ -10,7 +10,7 @@
       <div>
         <div id="news">
           <div v-for="(item, index) in news" :key="index">
-            <a-card style="margin-bottom:20px;" :loading="loading" :title="item.title"><div class="content" v-html="item.content"></div></a-card>
+            <a-card style="margin-bottom:20px;" :loading="loading" :title="item.title.rendered"><div class="content" v-html="item.content.rendered"></div></a-card>
           </div>
         </div>
       </div>
