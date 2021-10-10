@@ -180,6 +180,13 @@ body {
 #news .ant-card-head-title {
   font-weight: 600;
 }
+#news pre.code {
+  background: #333;
+  color: #F78C6C;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 3px #000 inset;
+}
 
 @media only screen and (max-width: 1000px) {
   #content {
